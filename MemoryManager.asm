@@ -77,29 +77,29 @@ FREE		# 2
 
 */
 new
-		PUSH 	hl
+        PUSH 	hl
         ; IY <- Heap address
-		POP 	iy									
-		PUSH 	hl
+        POP 	iy									
+        PUSH 	hl
         ; Heap size
-		PUSH 	de									
+        PUSH 	de									
         ; MEMORY_MANAGER_FIELDS Size 
-		LD 		de, MEMORY_MANAGER_FIELDS			
+        LD 		de, MEMORY_MANAGER_FIELDS			
         ; HL <- BEGIN address
-		ADD		hl, de								
-		LD 		(IY_BEGIN_LSB), l
-		LD 		(IY_BEGIN_MSB), h
-		LD		(IY_FREE_LSB), l
-		LD 		(IY_FREE_MSB), h
+        ADD		hl, de								
+        LD 		(IY_BEGIN_LSB), l
+        LD 		(IY_BEGIN_MSB), h
+        LD		(IY_FREE_LSB), l
+        LD 		(IY_FREE_MSB), h
         ; Heap size
-		POP		de									
+        POP		de									
         ; Heap address
-		POP		hl									
+        POP		hl									
         ; End Heap address
-		ADD 	hl, de								
-		LD 		(IY_END_LSB), l
-		LD 		(IY_END_MSB), h
-		RET
+        ADD 	hl, de								
+        LD 		(IY_END_LSB), l
+        LD 		(IY_END_MSB), h
+        RET
 
 /*
 	IN
@@ -113,48 +113,48 @@ new
 
 */
 alloc
-		PUSH 	hl	
-		; 		HL 	<-- llocated memory address
-		LD 		l, (IY_FREE_LSB)
-		LD 		h, (IY_FREE_MSB)
-		PUSH 	hl
-		ADD		hl,de	
-		;		HL	<-- next free block
-		LD 		(IY_FREE_LSB), l
-		LD 		(IY_FREE_MSB), h			
-		LD 		e, (IY_END_LSB)
-		LD 		d, (IY_END_MSB)			
-		AND 	a
-		SBC		hl,de
-		POP		hl
-		JR 		c, .correctSizeRequested
-		JR 		z, .correctSizeRequested	
+        PUSH 	hl	
+        ; 		HL 	<-- llocated memory address
+        LD 		l, (IY_FREE_LSB)
+        LD 		h, (IY_FREE_MSB)
+        PUSH 	hl
+        ADD		hl,de	
+        ;		HL	<-- next free block
+        LD 		(IY_FREE_LSB), l
+        LD 		(IY_FREE_MSB), h			
+        LD 		e, (IY_END_LSB)
+        LD 		d, (IY_END_MSB)			
+        AND 	a
+        SBC		hl,de
+        POP		hl
+        JR 		c, .correctSizeRequested
+        JR 		z, .correctSizeRequested	
 .overflow			
-		LD 		l, (IY_BEGIN_LSB)
-		LD 		h, (IY_BEGIN_MSB)
-		LD 		(IY_FREE_LSB), l
-		LD 		(IY_FREE_MSB), h			
+        LD 		l, (IY_BEGIN_LSB)
+        LD 		h, (IY_BEGIN_MSB)
+        LD 		(IY_FREE_LSB), l
+        LD 		(IY_FREE_MSB), h			
 .correctSizeRequested
-		PUSH 	hl
-		POP 	ix
-		POP 	hl
-		RET
+        PUSH 	hl
+        POP 	ix
+        POP 	hl
+        RET
 
 alloc_bc 
-		PUSH	ix
-		CALL 	MemoryManager.alloc
-		LD		c, ixl
-		LD		b, ixh
-		POP		ix
-		RET
+        PUSH	ix
+        CALL 	MemoryManager.alloc
+        LD		c, ixl
+        LD		b, ixh
+        POP		ix
+        RET
 reset
-		PUSH	af
-		LD 		a, (IY_BEGIN_LSB)
-		LD 		(IY_FREE_LSB), a
-		LD 		a, (IY_BEGIN_MSB)
-		LD 		(IY_FREE_MSB), a
-		POP		af
-		RET
+        PUSH	af
+        LD 		a, (IY_BEGIN_LSB)
+        LD 		(IY_FREE_LSB), a
+        LD 		a, (IY_BEGIN_MSB)
+        LD 		(IY_FREE_MSB), a
+        POP		af
+        RET
 
 		ENDMODULE
 

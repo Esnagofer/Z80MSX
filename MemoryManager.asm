@@ -139,14 +139,6 @@ alloc
         POP 	ix
         POP 	hl
         RET
-
-alloc_bc 
-        PUSH	ix
-        CALL 	MemoryManager.alloc
-        LD		c, ixl
-        LD		b, ixh
-        POP		ix
-        RET
 reset
         PUSH	af
         LD 		a, (IY_BEGIN_LSB)

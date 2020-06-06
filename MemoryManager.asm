@@ -12,9 +12,9 @@
 	+-----+-------+------------+----------- ... --------------+
 	|BEGIN|END    |FREE        |===ALLOCATED===|====FREE======|
 	+-----+-------+------------+----------- ... --------------+
-			       				^ BEGIN			  
-			          										  ^ END								   
-								     			^ FREE
+                               ^ BEGIN
+                                               ^ FREE
+                                                              ^ END
 
 	BEGIN		(2 byte) Address of begin Heap Space 
 	END 		(2 byte) Address of end Heap space
@@ -54,16 +54,16 @@ IFNDEF	MEMORY_MANAGER
 
 		STRUCT	MEMORY_MANAGER_FIELDS
 BEGIN		# 2
-END			# 2
+END	        # 2
 FREE		# 2
 		ENDS
 
 		DEFINE	IY_BEGIN_LSB	iy + MEMORY_MANAGER_FIELDS.BEGIN
 		DEFINE	IY_BEGIN_MSB	iy + MEMORY_MANAGER_FIELDS.BEGIN + 1
-		DEFINE	IY_END_LSB		iy + MEMORY_MANAGER_FIELDS.END
-		DEFINE	IY_END_MSB		iy + MEMORY_MANAGER_FIELDS.END + 1
-		DEFINE	IY_FREE_LSB		iy + MEMORY_MANAGER_FIELDS.FREE
-		DEFINE	IY_FREE_MSB		iy + MEMORY_MANAGER_FIELDS.FREE + 1
+		DEFINE	IY_END_LSB      iy + MEMORY_MANAGER_FIELDS.END
+		DEFINE	IY_END_MSB      iy + MEMORY_MANAGER_FIELDS.END + 1
+		DEFINE	IY_FREE_LSB     iy + MEMORY_MANAGER_FIELDS.FREE
+		DEFINE	IY_FREE_MSB     iy + MEMORY_MANAGER_FIELDS.FREE + 1
 
 /*
 	IN

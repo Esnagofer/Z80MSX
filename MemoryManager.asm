@@ -12,9 +12,9 @@
 	+-----+-------+------------+----------- ... --------------+
 	|BEGIN|END    |FREE        |===ALLOCATED===|====FREE======|
 	+-----+-------+------------+----------- ... --------------+
-                               ^ BEGIN
-                                               ^ FREE
-                                                              ^ END
+                                ^ BEGIN
+                                                ^ FREE
+                                                                ^ END
 
 	BEGIN		(2 byte) Address of begin Heap Space 
 	END 		(2 byte) Address of end Heap space
@@ -75,24 +75,28 @@ FREE		# 2
 	===
 	IY	->	 Memory Manager instance address
 
-	MODIFIES
-	========
-
 */
 new
 		PUSH 	hl
-		POP 	iy									; IY <- Heap address
+        ; IY <- Heap address
+		POP 	iy									
 		PUSH 	hl
-		PUSH 	de									; Heap size
-		LD 		de, MEMORY_MANAGER_FIELDS			; MEMORY_MANAGER_FIELDS Size 
-		ADD		hl, de								; HL <- BEGIN address
+        ; Heap size
+		PUSH 	de									
+        ; MEMORY_MANAGER_FIELDS Size 
+		LD 		de, MEMORY_MANAGER_FIELDS			
+        ; HL <- BEGIN address
+		ADD		hl, de								
 		LD 		(IY_BEGIN_LSB), l
 		LD 		(IY_BEGIN_MSB), h
 		LD		(IY_FREE_LSB), l
 		LD 		(IY_FREE_MSB), h
-		POP		de									; Heap size
-		POP		hl									; Heap address
-		ADD 	hl, de								; End Heap address
+        ; Heap size
+		POP		de									
+        ; Heap address
+		POP		hl									
+        ; End Heap address
+		ADD 	hl, de								
 		LD 		(IY_END_LSB), l
 		LD 		(IY_END_MSB), h
 		RET
